@@ -2,7 +2,10 @@ schema: spec-driven
 
 context: |
   Tech stack: Next.js 15 (App Router), TypeScript, React 19
-  Styling: Tailwind CSS
+  Styling: Tailwind CSS, shadcn/ui (components), Headless UI (accessible primitives)
+  Backend: Supabase (Auth, Database, RLS), Stripe (payments), Google OAuth
+  Validation: Zod (server-side required, client-side optional)
+  Testing: Vitest + Playwright | Package manager: npm
   Agent Skills: react-best-practices, web-design-guidelines, composition-patterns,
     compliance-patterns, db-migration, security-patterns, ux-states, testing-strategy,
     api-contracts, performance-patterns, deployment-lifecycle, sdd-phase-gates,
