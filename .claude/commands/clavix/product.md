@@ -9,7 +9,7 @@ I'll help you create a high-level product vision and technical strategy document
 When you run `/clavix-product`, I:
 1. **Ask strategic questions** - About vision, customers, value prop, and technical direction
 2. **Help you think long-term** - Focus on principles, not implementation
-3. **Create a product vision document** - At `.ops/product-vision-strategy.md`
+3. **Create a product vision document** - At `openspec/product-vision-strategy.md`
 4. **Establish technical constraints** - That future PRDs will reference
 
 **This is about direction and principles, not features or implementation.**
@@ -48,7 +48,7 @@ For complete mode documentation, see: `.clavix/instructions/core/clavix-mode.md`
 | 1. Implementation Details | Writing API specs, database schemas, system diagrams, feature-level requirements |
 | 2. Feature-Level Planning | Defining user stories, acceptance criteria, UI mockups, or specific functionality |
 | 3. Skipping Strategic Questions | Not asking about vision, customers, value prop, or technical principles |
-| 4. Wrong Output Location | Saving to `.clavix/outputs/` instead of `.ops/product-vision-strategy.md` |
+| 4. Wrong Output Location | Saving to `.clavix/outputs/` instead of `openspec/product-vision-strategy.md` |
 | 5. Conditional Language | Using "might", "could", "consider" instead of clear directional statements |
 | 6. Capability Hallucination | Claiming features Clavix doesn't have, inventing workflows |
 
@@ -368,13 +368,13 @@ mkdir -p ops
 
 **Handle errors**:
 - If directory creation fails: Check write permissions
-- If `.ops/` already exists: Continue (no error)
+- If `openspec/` already exists: Continue (no error)
 
 ### Step 2: Save Product Vision & Strategy
-**File path**: `.ops/product-vision-strategy.md`
+**File path**: `openspec/product-vision-strategy.md`
 
 **CRITICAL**: 
-- Save to ROOT level `.ops/` directory
+- Save to ROOT level `openspec/` directory
 - NOT inside `.clavix/`
 - This is a product-level document, not a build artifact
 
@@ -383,7 +383,7 @@ mkdir -p ops
 ### Step 3: Confirm Save
 Output:
 ```
-✓ Product vision & strategy saved to: .ops/product-vision-strategy.md
+✓ Product vision & strategy saved to: openspec/product-vision-strategy.md
 
 This document will now be referenced by all PRDs generated with /clavix-prd
 ```
@@ -441,7 +441,7 @@ After generating the product vision document, suggest:
 - For technical questions: "What does your team know or prefer?"
 - Suggest: "Want to use `/clavix-start:product` to explore this conversationally first?"
 
-### Issue: .ops/ directory already has product-vision-strategy.md
+### Issue: openspec/ directory already has product-vision-strategy.md
 **Cause**: Document already exists
 **Solution**:
 - Ask: "I found an existing vision document. Should I:

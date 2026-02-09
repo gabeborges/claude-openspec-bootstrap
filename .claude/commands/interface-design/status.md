@@ -9,7 +9,7 @@ Show current design system state.
 
 ## What to Show
 
-**If `..ops/ui-design-system.md` exists:**
+**If `openspec/ui-design-system.md` exists:**
 
 Display:
 ```
@@ -44,7 +44,7 @@ Options:
 
 ## Implementation
 
-1. Read `..ops/ui-design-system.md`
+1. Read `openspec/ui-design-system.md`
 2. Parse direction, tokens, patterns
 3. Format and display
 4. If no system, suggest next steps

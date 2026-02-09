@@ -6,20 +6,20 @@ context: |
   Backend: Supabase (Auth, Database, RLS), Stripe (payments), Google OAuth
   Validation: Zod (server-side required, client-side optional)
   Testing: Vitest + Playwright | Package manager: npm
-  Agent Skills: react-best-practices, web-design-guidelines, composition-patterns,
+  Agent Skills: vercel-react-best-practices, web-design-guidelines, vercel-composition-patterns,
     compliance-patterns, db-migration, security-patterns, ux-states, testing-strategy,
     api-contracts, performance-patterns, deployment-lifecycle, sdd-phase-gates,
     frontend-design, interface-design
   Docs: .next-docs/ contains version-specific Next.js documentation
 
-  When writing proposals, reference composition-patterns for component architecture.
+  When writing proposals, reference vercel-composition-patterns for component architecture.
   When writing specs, include accessibility scenarios from web-design-guidelines.
   When writing specs, include security acceptance criteria from security-patterns.
   When writing specs, enumerate all UI states (loading, empty, populated, error) per ux-states.
   When writing specs, format acceptance criteria as testable AC-N statements per testing-strategy.
   When writing specs, include endpoint inventory per api-contracts.
   When writing specs, add performance acceptance criteria (PC-N) per performance-patterns.
-  When writing design docs, apply react-best-practices rules for data-fetching decisions.
+  When writing design docs, apply vercel-react-best-practices rules for data-fetching decisions.
   When writing design docs, include STRIDE threat model per security-patterns.
   When writing design docs, map UI states to component props per ux-states.
   When writing design docs, include test architecture section per testing-strategy.
@@ -27,7 +27,7 @@ context: |
   When writing design docs, include performance section (caching, bundle, indexes) per performance-patterns.
   When writing design docs, include deployment strategy per deployment-lifecycle.
   When writing design docs, include db-migration-plan.md if schema changes per db-migration.
-  When writing tasks, include a final "Deploy & Verify" section using vercel-deploy-claimable.
+  When writing tasks, include a final "Deploy & Verify" section using deployment-lifecycle.
   When writing tasks, add security verification tasks per security-patterns.
   When writing tasks, add state coverage verification tasks per ux-states.
   When writing tasks, add test implementation tasks per testing-strategy.
@@ -42,7 +42,7 @@ context: |
 
 rules:
   proposal:
-    - Reference composition-patterns when proposing new UI components
+    - Reference vercel-composition-patterns when proposing new UI components
     - Include performance impact section for data-fetching changes
     - Note security implications for auth, data access, or external APIs per security-patterns
     - Flag performance impact for new pages or heavy data queries per performance-patterns
@@ -61,7 +61,7 @@ rules:
     - Include data classification for PHI/PII fields per compliance-patterns
     - Run sdd-phase-gates specs-to-design checklist before advancing
   design:
-    - Address Critical and High priority react-best-practices rules
+    - Address Critical and High priority vercel-react-best-practices rules
     - Validate API usage against .next-docs/ for version correctness
     - Include STRIDE threat model and Security Design section per security-patterns
     - Map UI states to component props and document transitions per ux-states
@@ -73,7 +73,7 @@ rules:
     - Include compliance.md with data classification and controls per compliance-patterns
     - Run sdd-phase-gates design-to-tasks checklist before advancing
   tasks:
-    - Include deployment task using vercel-deploy-claimable
+    - Include deployment task using deployment-lifecycle
     - Include verification task checking specs against deployed preview
     - Add security verification tasks (RLS, input validation, audit logging) per security-patterns
     - Add state coverage verification tasks per ux-states

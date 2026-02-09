@@ -7,11 +7,11 @@ I'll help you create a lightweight, version-scoped Product Requirements Document
 ## What This Does
 
 When you run `/clavix-prd`, I:
-1. **Check for product vision** - If `.ops/product-vision-strategy.md` exists, I'll reference it
+1. **Check for product vision** - If `openspec/product-vision-strategy.md` exists, I'll reference it
 2. **Establish version scope** - Confirm what version we're documenting (v0, v1, v2, etc.)
 3. **Ask focused questions** - About users, problems, features, and success metrics
 4. **Help you prioritize** - Separate must-haves from nice-to-haves
-5. **Create a versioned Mini-PRD** - Saved to `.ops/build/v{X}/prd.md`
+5. **Create a versioned Mini-PRD** - Saved to `openspec/build/v{X}/prd.md`
 
 **This PRD is scoped to one version/epic, not the entire product.**
 
@@ -49,8 +49,8 @@ For complete mode documentation, see: `.clavix/instructions/core/clavix-mode.md`
 |------|--------------------|
 | 1. Implementation Details | Writing API contracts, database schemas, system architecture diagrams, deployment pipelines |
 | 2. Skipping Version Scope | Not confirming which version (v0, v1, v2) this PRD is for |
-| 3. Ignoring Product Vision | Not checking for or referencing .ops/product-vision-strategy.md when it exists |
-| 4. Wrong Output Location | Saving to .clavix/outputs/ instead of .ops/build/v{X}/prd.md |
+| 3. Ignoring Product Vision | Not checking for or referencing openspec/product-vision-strategy.md when it exists |
+| 4. Wrong Output Location | Saving to .clavix/outputs/ instead of openspec/build/v{X}/prd.md |
 | 5. Missing Key Sections | Not including must-haves, nice-to-haves, or non-goals |
 | 6. Solution-Focused Problems | Describing solutions instead of problems in "The Problem We're Solving" |
 | 7. Capability Hallucination | Claiming features Clavix doesn't have, inventing workflows |
@@ -81,7 +81,7 @@ Implementation: BLOCKED - I will develop requirements, not implement features
 
 Clavix Mini-PRD creates lightweight, version-scoped requirements documents that:
 - **Focus on one version/epic** (v0, v1, v2, etc.) - not the entire product
-- **Respect product vision** - Reference `.ops/product-vision-strategy.md` for strategic context
+- **Respect product vision** - Reference `openspec/product-vision-strategy.md` for strategic context
 - **Stay high-level** - Define what to build, not how to build it
 - **Separate priorities** - Must-haves vs nice-to-haves
 - **Include non-goals** - Explicitly state what's NOT in scope
@@ -94,11 +94,11 @@ Each PRD is practical, engineer-friendly, and actionable.
 
 **STEP 0: Check for Product Vision & Strategy Document (REQUIRED)**
 
-Before starting the PRD questions, check if `.ops/product-vision-strategy.md` exists:
+Before starting the PRD questions, check if `openspec/product-vision-strategy.md` exists:
 
 ```bash
 # Check if product vision exists
-if [ -f ".ops/product-vision-strategy.md" ]; then
+if [ -f "openspec/product-vision-strategy.md" ]; then
   echo "✓ Found product vision document"
 fi
 ```
@@ -309,7 +309,7 @@ Create the PRD using this exact structure:
 # PRD: {Project/Feature Name}
 
 **Version:** v{X}  
-**Product Vision Reference:** [If exists] See `.ops/product-vision-strategy.md` for strategic context
+**Product Vision Reference:** [If exists] See `openspec/product-vision-strategy.md` for strategic context
 
 ---
 
@@ -418,7 +418,7 @@ Examples: Performance, accessibility, reliability
 
 ## Technical Considerations (High Level)
 
-{This section respects the Product Technical Strategy from .ops/product-vision-strategy.md}
+{This section respects the Product Technical Strategy from openspec/product-vision-strategy.md}
 
 ### Assumptions
 
@@ -430,7 +430,7 @@ Examples: Performance, accessibility, reliability
 - {Authentication approach}
 - {Hosting environment}
 
-{If product vision exists, reference it: "See .ops/product-vision-strategy.md for core platform decisions"}
+{If product vision exists, reference it: "See openspec/product-vision-strategy.md for core platform decisions"}
 
 ---
 
@@ -444,7 +444,7 @@ Examples: Performance, accessibility, reliability
 - {Data residency rules}
 - {Integration limitations}
 
-{If product vision exists, reference it: "See .ops/product-vision-strategy.md for security and compliance posture"}
+{If product vision exists, reference it: "See openspec/product-vision-strategy.md for security and compliance posture"}
 
 ---
 
@@ -524,10 +524,10 @@ Those belong in:
 ### Step 1: Determine Version Number
 
 ```bash
-# Check for existing versions in .ops/build/
-if [ -d ".ops/build" ]; then
+# Check for existing versions in openspec/build/
+if [ -d "openspec/build" ]; then
   # Find highest version number
-  LATEST=$(ls -d .ops/build/v* 2>/dev/null | sed 's/.*v//' | sort -n | tail -1)
+  LATEST=$(ls -d openspec/build/v* 2>/dev/null | sed 's/.*v//' | sort -n | tail -1)
   VERSION=$((LATEST + 1))
 else
   VERSION=0
@@ -544,19 +544,19 @@ fi
 ### Step 2: Create Output Directory
 
 ```bash
-mkdir -p .ops/build/v${VERSION}
+mkdir -p openspec/build/v${VERSION}
 ```
 
 **Handle errors**:
 - If directory creation fails: Check write permissions
-- If `.ops/` doesn't exist: Create it first: `mkdir -p .ops/build/v${VERSION}`
+- If `openspec/` doesn't exist: Create it first: `mkdir -p openspec/build/v${VERSION}`
 
 ### Step 3: Save PRD
 
-**File path**: `.ops/build/v{VERSION}/prd.md`
+**File path**: `openspec/build/v{VERSION}/prd.md`
 
 **CRITICAL**: 
-- Save to ROOT level `.ops/build/v{X}/` directory
+- Save to ROOT level `openspec/build/v{X}/` directory
 - NOT inside `.clavix/`
 - Single file named `prd.md`
 
@@ -566,7 +566,7 @@ mkdir -p .ops/build/v${VERSION}
 
 **Verification Protocol:**
 1. **Immediately after Write**, use Read tool to verify:
-   - Read `.ops/build/v{VERSION}/prd.md`
+   - Read `openspec/build/v{VERSION}/prd.md`
    - Confirm content matches what you wrote
    - Verify all sections are present
 
@@ -580,9 +580,9 @@ Display to user:
 
 File saved:
   • Version: v{VERSION}
-  • Location: .ops/build/v{VERSION}/prd.md
+  • Location: openspec/build/v{VERSION}/prd.md
   • Scope: {Feature name} - version-scoped for v{VERSION}
-  • [If product vision exists] Aligned with: .ops/product-vision-strategy.md
+  • [If product vision exists] Aligned with: openspec/product-vision-strategy.md
 
 Next steps:
   • Review and edit PRD if needed
@@ -679,7 +679,7 @@ Next steps:
 **Cause**: AI forgot to check for or read the product vision document
 **Solution** (self-correction):
 - STOP immediately
-- Read `.ops/product-vision-strategy.md` completely
+- Read `openspec/product-vision-strategy.md` completely
 - Review current PRD draft for conflicts
 - Revise PRD to align with vision
 - Add product vision reference to PRD

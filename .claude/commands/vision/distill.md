@@ -5,7 +5,7 @@ description: Split product-vision-strategy.md into domain-specific files for AI-
 
 # Vision Distill
 
-Split `.ops/product-vision-strategy.md` into 3 domain-scoped files under `.ops/`. Agents load only their domain (~30-40% of the full doc) instead of the entire vision document.
+Split `openspec/product-vision-strategy.md` into 3 domain-scoped files under `openspec/`. Agents load only their domain (~30-40% of the full doc) instead of the entire vision document.
 
 ## Output Files
 
@@ -22,7 +22,7 @@ Split `.ops/product-vision-strategy.md` into 3 domain-scoped files under `.ops/`
 ## Usage
 
 ```
-/vision:distill              # Distill from .ops/product-vision-strategy.md
+/vision:distill              # Distill from openspec/product-vision-strategy.md
 /vision:distill $ARGUMENTS   # Optional: path to a different vision doc
 ```
 
@@ -30,9 +30,9 @@ Split `.ops/product-vision-strategy.md` into 3 domain-scoped files under `.ops/`
 
 ### Step 1: Read Source
 
-Read `.ops/product-vision-strategy.md` (or path from `$ARGUMENTS` if provided).
+Read `openspec/product-vision-strategy.md` (or path from `$ARGUMENTS` if provided).
 
-**If missing:** Stop with: "No vision document found at `.ops/product-vision-strategy.md`. Run `/clavix:product` first."
+**If missing:** Stop with: "No vision document found at `openspec/product-vision-strategy.md`. Run `/clavix:product` first."
 
 ### Step 2: Parse Sections
 
@@ -70,10 +70,10 @@ From the full §10 content, extract only:
 
 ### Step 5: Write Files
 
-Write each output file to `.ops/` with this structure:
+Write each output file to `openspec/` with this structure:
 
 ```markdown
-<!-- Source: .ops/product-vision-strategy.md -->
+<!-- Source: openspec/product-vision-strategy.md -->
 <!-- Included: §1, §2, §3, §4, §5, §6, §7, §12 -->
 <!-- Skipped: §4 (placeholder) — or "none" -->
 <!-- Regenerate: /vision:distill -->
@@ -124,7 +124,7 @@ Sections to revisit (flesh out in canonical doc, then rerun /vision:distill):
 ## Behavior
 
 - **Idempotent** — Safe to rerun. Overwrites existing split files.
-- **Non-destructive** — NEVER modifies `.ops/product-vision-strategy.md`.
+- **Non-destructive** — NEVER modifies `openspec/product-vision-strategy.md`.
 - **Verbatim** — No summarizing or rewording. Exact copy.
 - **Deterministic** — Same input always produces same output.
 

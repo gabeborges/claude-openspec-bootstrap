@@ -53,11 +53,6 @@ Testing: Vitest + Playwright | Package manager: npm | Workflow: SDD (OpenSpec + 
 - Use parallel task execution (`Task` tool) for independent work items
 - When implementing from `tasks.md`, execute tasks in dependency order but parallelize independent tasks
 
-## Git Identity
-- `user.name = YourGitHubUsername`
-- `user.email = your.email@example.com`
-- Origin: `git@github.com:YourGitHubUsername/<repo>.git`
-
 ## Next.js (App Router)
 - App Router (`app/`) is authoritative
 - Prefer Server Components by default; use `"use client"` only when required

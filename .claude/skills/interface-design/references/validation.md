@@ -1,6 +1,6 @@
 # Memory Management
 
-When and how to update `.ops/ui-design-system.md`.
+When and how to update `openspec/ui-design-system.md`.
 
 ## When to Add Patterns
 

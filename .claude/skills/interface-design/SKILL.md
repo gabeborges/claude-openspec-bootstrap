@@ -267,7 +267,7 @@ Direction: [approach that connects to the above]"
 ```
 
 ## If Project Has system.md
-Read `.ops/ui-design-system.md` and apply. Decisions are made.
+Read `openspec/ui-design-system.md` and apply. Decisions are made.
 
 ## If No system.md
 1. Explore domain — Produce all four required outputs
@@ -287,7 +287,7 @@ When you finish building something, **always offer to save**:
 "Want me to save these patterns for future sessions?"
 ```
 
-If yes, write to `.ops/ui-design-system.md`:
+If yes, write to `openspec/ui-design-system.md`:
 - Direction and feel
 - Depth strategy (borders/shadows/layered)
 - Spacing base unit
