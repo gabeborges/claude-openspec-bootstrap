@@ -1,20 +1,26 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Tech stack: Next.js 15 (App Router), TypeScript, React 19
+  Styling: Tailwind CSS
+  Agent Skills: react-best-practices, web-design-guidelines, composition-patterns
+  Docs: .next-docs/ contains version-specific Next.js documentation
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  When writing proposals, reference composition-patterns for component architecture.
+  When writing specs, include accessibility scenarios from web-design-guidelines.
+  When writing design docs, apply react-best-practices rules for data-fetching decisions.
+  When writing tasks, include a final "Deploy & Verify" section using vercel-deploy-claimable.
+
+rules:
+  proposal:
+    - Reference composition-patterns when proposing new UI components
+    - Include performance impact section for data-fetching changes
+  specs:
+    - Include accessibility scenarios for any user-facing capability
+    - Use WHEN/THEN/AND format with specific measurable criteria
+  design:
+    - Address Critical and High priority react-best-practices rules
+    - Validate API usage against .next-docs/ for version correctness
+  tasks:
+    - Include deployment task using vercel-deploy-claimable
+    - Include verification task checking specs against deployed preview
