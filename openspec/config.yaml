@@ -3,24 +3,93 @@ schema: spec-driven
 context: |
   Tech stack: Next.js 15 (App Router), TypeScript, React 19
   Styling: Tailwind CSS
-  Agent Skills: react-best-practices, web-design-guidelines, composition-patterns
+  Agent Skills: react-best-practices, web-design-guidelines, composition-patterns,
+    compliance-patterns, db-migration, security-patterns, ux-states, testing-strategy,
+    api-contracts, performance-patterns, deployment-lifecycle, sdd-phase-gates,
+    frontend-design, interface-design
   Docs: .next-docs/ contains version-specific Next.js documentation
 
   When writing proposals, reference composition-patterns for component architecture.
   When writing specs, include accessibility scenarios from web-design-guidelines.
+  When writing specs, include security acceptance criteria from security-patterns.
+  When writing specs, enumerate all UI states (loading, empty, populated, error) per ux-states.
+  When writing specs, format acceptance criteria as testable AC-N statements per testing-strategy.
+  When writing specs, include endpoint inventory per api-contracts.
+  When writing specs, add performance acceptance criteria (PC-N) per performance-patterns.
   When writing design docs, apply react-best-practices rules for data-fetching decisions.
+  When writing design docs, include STRIDE threat model per security-patterns.
+  When writing design docs, map UI states to component props per ux-states.
+  When writing design docs, include test architecture section per testing-strategy.
+  When writing design docs, produce api-contracts.md artifact per api-contracts.
+  When writing design docs, include performance section (caching, bundle, indexes) per performance-patterns.
+  When writing design docs, include deployment strategy per deployment-lifecycle.
+  When writing design docs, include db-migration-plan.md if schema changes per db-migration.
   When writing tasks, include a final "Deploy & Verify" section using vercel-deploy-claimable.
+  When writing tasks, add security verification tasks per security-patterns.
+  When writing tasks, add state coverage verification tasks per ux-states.
+  When writing tasks, add test implementation tasks per testing-strategy.
+  When writing tasks, add endpoint implementation and contract test tasks per api-contracts.
+  When writing tasks, add performance verification tasks per performance-patterns.
+  When writing tasks, add deployment tasks (env vars, feature flags, smoke tests) per deployment-lifecycle.
+  When writing tasks, add migration tasks if schema changes per db-migration.
+  When applying changes, run sdd-phase-gates checklists before advancing phases.
+  When applying changes, apply frontend-design skill for UI code generation.
+  When applying changes, apply interface-design skill for dashboard/app interfaces.
+  When handling regulated data, apply compliance-patterns for data classification and audit trails.
 
 rules:
   proposal:
     - Reference composition-patterns when proposing new UI components
     - Include performance impact section for data-fetching changes
+    - Note security implications for auth, data access, or external APIs per security-patterns
+    - Flag performance impact for new pages or heavy data queries per performance-patterns
+    - Identify API surface changes per api-contracts
+    - Note compliance implications if handling PHI/PII per compliance-patterns
+    - Flag schema changes requiring migration per db-migration
+    - Run sdd-phase-gates proposal-to-specs checklist before advancing
   specs:
     - Include accessibility scenarios for any user-facing capability
     - Use WHEN/THEN/AND format with specific measurable criteria
+    - Include security acceptance criteria (auth, authz, input validation) per security-patterns
+    - Enumerate all UI states (loading, empty, populated, error) per ux-states
+    - Format acceptance criteria as testable AC-N statements with test type tags per testing-strategy
+    - Include endpoint inventory (method, path, auth, request/response shapes) per api-contracts
+    - Add performance acceptance criteria (PC-N) for user-facing pages per performance-patterns
+    - Include data classification for PHI/PII fields per compliance-patterns
+    - Run sdd-phase-gates specs-to-design checklist before advancing
   design:
     - Address Critical and High priority react-best-practices rules
     - Validate API usage against .next-docs/ for version correctness
+    - Include STRIDE threat model and Security Design section per security-patterns
+    - Map UI states to component props and document transitions per ux-states
+    - Include Test Architecture section with required mocks per testing-strategy
+    - Produce api-contracts.md artifact and document Zod schemas per api-contracts
+    - Include Performance section (caching, bundle impact, indexes) per performance-patterns
+    - Include Deployment Strategy (feature flags, migration order, rollback) per deployment-lifecycle
+    - Include db-migration-plan.md with expand/contract phases if schema changes per db-migration
+    - Include compliance.md with data classification and controls per compliance-patterns
+    - Run sdd-phase-gates design-to-tasks checklist before advancing
   tasks:
     - Include deployment task using vercel-deploy-claimable
     - Include verification task checking specs against deployed preview
+    - Add security verification tasks (RLS, input validation, audit logging) per security-patterns
+    - Add state coverage verification tasks per ux-states
+    - Add test implementation tasks mapped to ACs per testing-strategy
+    - Add endpoint implementation and contract test tasks per api-contracts
+    - Add performance verification tasks (bundle analysis, Lighthouse, query plans) per performance-patterns
+    - Add deployment tasks (env vars, feature flags, smoke tests) per deployment-lifecycle
+    - Add migration tasks with deploy coordination per db-migration
+    - Add compliance verification tasks per compliance-patterns
+    - Run sdd-phase-gates tasks-to-apply checklist before advancing
+  apply:
+    - Run security checklist before marking tasks complete per security-patterns
+    - Run vitest coverage and playwright tests per testing-strategy
+    - Run contract tests for all API endpoints per api-contracts
+    - Verify bundle budgets and Lighthouse CWV thresholds per performance-patterns
+    - Verify feature flag disabled in production, run smoke tests per deployment-lifecycle
+    - Verify database migrations applied successfully per db-migration
+    - Verify compliance controls implemented per compliance-patterns
+    - Run sdd-phase-gates apply-to-archive checklist before advancing
+  archive:
+    - Document post-deploy verification results per deployment-lifecycle
+    - Clean up feature flags after stable rollout per deployment-lifecycle
