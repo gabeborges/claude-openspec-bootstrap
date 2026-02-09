@@ -121,9 +121,9 @@ Without it, deploying a schema change and code change simultaneously creates a c
 
 ---
 
-# db-migration-plan.yaml Schema
+# db-migration-plan.md Schema
 
-Every migration must produce this artifact.
+Every migration must produce this artifact as a markdown file (`db-migration-plan.md`) containing YAML content in fenced code blocks.
 
 ```yaml
 # Required root-level fields
@@ -443,7 +443,7 @@ These operations trigger an automatic STOP:
 
 4. **Schema change breaks existing queries**
    - Block reason: Application breakage
-   - Required: Create `spec-change-requests.yaml` entry
+   - Required: Flag the conflict in `proposal.md` or `design.md`
 
 5. **Large backfill (>1M rows) without batching**
    - Block reason: Table locking, performance impact
@@ -455,8 +455,8 @@ When blocked, produce:
 
 1. **Risk assessment** with level: high
 2. **Complete rollback plan** including backup restore procedure
-3. **Spec change request** if requirements conflict
-4. **Explicit approval note** in `db-migration-plan.yaml`:
+3. **Conflict flag** in `proposal.md` or `design.md` if requirements conflict
+4. **Explicit approval note** in `db-migration-plan.md`:
 
 ```yaml
 migrations:
@@ -479,18 +479,16 @@ To override a block:
 1. Document why the block is being overridden
 2. Provide mitigation strategy
 3. Get explicit sign-off from tech lead or architect
-4. Note override in `checks.yaml`:
+4. Note override in `openspec/changes/<change-name>/tasks.md` under a "Migration Overrides" section:
 
-```yaml
-db_migration:
-  status: pass
-  blockers:
-    - "DROP COLUMN email_confirmed_at (destructive)"
-  overrides:
-    - blocker: "DROP COLUMN email_confirmed_at (destructive)"
-      approved_by: "tech-lead"
-      justification: "Part of expand/contract, expand complete, migrate verified"
-      date: "2024-02-05"
+```markdown
+## Migration Overrides
+
+### Override: DROP COLUMN email_confirmed_at (destructive)
+- **Status:** Approved
+- **Approved by:** tech-lead
+- **Date:** 2024-02-05
+- **Justification:** Part of expand/contract, expand complete, migrate verified
 ```
 
 ---
@@ -502,8 +500,9 @@ When a task involves database changes:
 ## 1. Analyze Requirements
 
 Read:
-- `.ops/build/v{x}/<feature-name>/specs.md` — What schema changes are needed?
-- `.ops/build/v{x}/<feature-name>/tasks.yaml` — Which tasks touch the database?
+- `openspec/changes/<change-name>/proposal.md` — What schema changes are needed?
+- `openspec/changes/<change-name>/specs/<capability>/spec.md` — Detailed capability specs
+- `openspec/changes/<change-name>/tasks.md` — Which tasks touch the database?
 - Current schema (Supabase dashboard or migration files)
 
 Identify:
@@ -556,31 +555,31 @@ For each phase, document:
 
 ## 6. Write Migration Plan
 
-Create `.ops/build/v{x}/<feature-name>/db-migration-plan.yaml` with:
+Create `openspec/changes/<change-name>/db-migration-plan.md` (markdown file with YAML content in fenced code blocks) with:
 - All phases
 - Risk assessment
 - Rollback procedure
 - Supabase-specific notes (RLS, Realtime, etc.)
 
-## 7. Update Checks
+## 7. Update Task Completion Checks
 
-Merge into `.ops/build/v{x}/<feature-name>/checks.yaml`:
+Add a "DB Migration Checks" section to `openspec/changes/<change-name>/tasks.md`:
 
-```yaml
-db_migration:
-  status: pass|fail
-  blockers:
-    - "List any automatic blocks"
-  notes:
-    - "Risk level: low/med/high"
-    - "Estimated duration: X seconds/minutes"
-    - "Deployment coordination: expand before code, contract after"
+```markdown
+## DB Migration Checks
+
+- **Status:** pass|fail
+- **Risk level:** low/med/high
+- **Estimated duration:** X seconds/minutes
+- **Deployment coordination:** expand before code, contract after
+- **Blockers:**
+  - List any automatic blocks
 ```
 
 ## 8. Block If Necessary
 
 If destructive operation without approval:
-- Set `checks.yaml` status to `fail`
+- Mark the migration check status as `fail` in `tasks.md`
 - List blocker
 - Request explicit approval
 - Do not proceed

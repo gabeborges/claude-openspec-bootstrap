@@ -221,9 +221,10 @@ Every feature handling regulated data must have a `compliance.md` file.
 ---
 
 ## References
-- Spec: `.ops/build/v{x}/{feature}/specs.md`
-- System design: `.ops/build/v{x}/{feature}/system-design.yaml`
-- Tasks: `.ops/build/v{x}/{feature}/tasks.yaml`
+- Proposal: `openspec/changes/<change-name>/proposal.md`
+- Specs: `openspec/changes/<change-name>/specs/<capability>/spec.md`
+- Design: `openspec/changes/<change-name>/design.md`
+- Tasks: `openspec/changes/<change-name>/tasks.md`
 ```
 
 ---
@@ -463,18 +464,18 @@ on_export_request:
 # Integration with SDD
 
 **Compliance Engineer workflow:**
-1. Read `specs.md` and `tasks.yaml`
+1. Read `openspec/changes/<change-name>/proposal.md` and `openspec/changes/<change-name>/specs/<capability>/spec.md`
 2. Identify all PHI/PII data flows
-3. Create `compliance.md` with controls and acceptance checks
-4. Update `specs.md` with compliance acceptance checks
-5. If specs conflict with compliance, create `spec-change-requests.yaml` and stop
+3. Create `compliance.md` inside the change directory (`openspec/changes/<change-name>/compliance.md`)
+4. Update relevant `specs/<capability>/spec.md` with compliance acceptance checks
+5. If specs conflict with compliance, flag the conflict in `proposal.md` or `design.md` and stop
 
 **Compliance Auditor workflow:**
 1. Read `compliance.md` for required controls
 2. Review PR diff against compliance requirements
 3. Verify PHI/PII handling, encryption, audit logging, access control
-4. Create remediation tickets in `tasks.yaml` for gaps
-5. Write verdict to `checks.yaml` (blocking if non-compliant)
+4. Create remediation tasks in `openspec/changes/<change-name>/tasks.md` for gaps
+5. Verify task completion status in `tasks.md` (blocking if non-compliant)
 
 **Developer workflow:**
 1. Read `compliance.md` before implementing feature
@@ -592,9 +593,10 @@ Feature allows healthcare providers to create, view, and update patient medical 
 ---
 
 ## References
-- Spec: `.ops/build/v1/patient-records/specs.md`
-- System design: `.ops/build/v1/patient-records/system-design.yaml`
-- Tasks: `.ops/build/v1/patient-records/tasks.yaml`
+- Proposal: `openspec/changes/patient-records/proposal.md`
+- Specs: `openspec/changes/patient-records/specs/<capability>/spec.md`
+- Design: `openspec/changes/patient-records/design.md`
+- Tasks: `openspec/changes/patient-records/tasks.md`
 ```
 
 ---

@@ -528,12 +528,39 @@ Before marking a feature "done":
 
 ---
 
+# SDD Phase Integration
+
+Security concerns must be addressed at every phase of the OpenSpec pipeline:
+
+## Specs Phase
+- Add security acceptance scenarios to `openspec/changes/<change-name>/specs/<capability>/spec.md`
+- Every capability spec MUST include authentication, authorization, and input validation acceptance criteria
+- Identify sensitive data fields (PII/PHI) and document required handling in the spec
+
+## Design Phase
+- Document the STRIDE threat model in `openspec/changes/<change-name>/design.md`
+- Include a "Security Design" section covering: auth flow, data encryption, RLS policies, rate limiting
+- Document all third-party integrations and their security implications
+
+## Tasks Phase
+- Add security verification tasks to `openspec/changes/<change-name>/tasks.md`
+- Each task touching auth, data access, or external APIs must include security acceptance checks
+- Include tasks for: RLS policy creation/testing, input validation implementation, audit logging setup
+
+## Apply Phase
+- Run the Security Checklist (above) before marking any task as complete
+- Verify all RLS policies are tested with both authorized and unauthorized access
+- Confirm no secrets appear in code, logs, or diffs
+- Validate OWASP Top 10 coverage for all new endpoints
+
+---
+
 # When to Escalate
 
 If you encounter:
-- Security requirement conflicting with spec → Create `spec-change-requests.yaml` entry
-- Vulnerability in existing code → Create remediation ticket in `tasks.yaml`
-- Dependency with known CVE → Update dependency, document in `decisions-log.md`
+- Security requirement conflicting with spec → Flag the conflict in `openspec/changes/<change-name>/proposal.md` or `design.md`
+- Vulnerability in existing code → Create remediation task in `openspec/changes/<change-name>/tasks.md`
+- Dependency with known CVE → Update dependency, document rationale in `openspec/changes/<change-name>/design.md`
 
 ---
 

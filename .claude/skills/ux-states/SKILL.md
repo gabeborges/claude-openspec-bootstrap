@@ -1,6 +1,6 @@
 ---
 name: ux-states
-description: State enumeration and accessibility framework for interactive elements
+description: Ensure complete UI state coverage (loading, empty, error, populated) and state-to-component mapping for interactive features
 ---
 
 # UX States
@@ -35,47 +35,25 @@ Every interactive element and screen MUST define these states:
 
 ---
 
-## Accessibility Checklist
+## Accessibility (State-Specific)
 
-All UI work MUST meet these accessibility requirements:
+For the full accessibility checklist (ARIA roles, keyboard navigation, contrast, forms), see the **web-design-guidelines** skill. This section covers only state-specific accessibility concerns.
 
-### ARIA Roles
-- Use semantic HTML first (`<button>`, `<nav>`, `<main>`, etc.)
-- Add ARIA roles only when semantic HTML is insufficient
-- Common roles: `role="grid"`, `role="dialog"`, `role="alert"`, `role="status"`
-- Always validate role usage against ARIA spec
+### State Change Announcements
+- Use `aria-live="polite"` regions to announce state transitions (loading to populated, error appearance)
+- Loading states: announce "Loading..." to screen readers via `aria-busy="true"` on the container
+- Error states: use `role="alert"` to immediately announce errors
+- Empty states: ensure the empty message is in the document flow (not only visual)
 
-### Keyboard Navigation
-- All interactive elements must be keyboard accessible
-- Logical tab order (verify with Tab key)
-- Escape closes modals/overlays
-- Enter/Space activates buttons and controls
-- Arrow keys navigate lists, grids, tabs
+### Focus Management During State Transitions
+- When transitioning from loading to error, move focus to the error message or retry button
+- When transitioning from loading to populated, do NOT steal focus (let user continue from current position)
+- When a retry action triggers loading, return focus to retry button after resolution
 
-### Focus Management
-- Visible focus indicators (not `outline: none` without replacement)
-- Focus moves to appropriate element after actions (e.g., modal open/close)
-- Focus trap in modals and overlays
-- Skip links for main content
-
-### Contrast Requirements
-- Text contrast minimum 4.5:1 for normal text
-- 3:1 for large text (18pt+ or 14pt+ bold)
-- 3:1 for UI components and graphical objects
-- Test with browser dev tools or contrast checkers
-
-### Screen Reader Considerations
-- Use `aria-label` for icons without text
-- Use `aria-live` for dynamic content updates
-- Use `aria-describedby` for additional context
-- Announce state changes (e.g., sort direction, filter applied)
-- Test with VoiceOver (macOS) or NVDA (Windows)
-
-### Form Accessibility
-- Associate labels with inputs (`<label for="id">`)
-- Use `aria-required` for required fields
-- Provide clear error messages linked with `aria-describedby`
-- Group related inputs with `<fieldset>` and `<legend>`
+### Disabled State Accessibility
+- Use `aria-disabled="true"` instead of removing elements from tab order
+- Provide tooltip or `aria-describedby` explaining why the element is disabled
+- Maintain visual indication of disabled state with sufficient contrast (3:1 minimum)
 
 ---
 
@@ -198,6 +176,147 @@ Map screen states to component props (from frontend-designer):
 - Loading states should have minimum duration (avoid flash)
 - Empty states should suggest next action
 - Populated states should indicate refresh/update availability
+
+---
+
+## SDD Phase Integration
+
+UX state coverage must be addressed at every phase of the OpenSpec pipeline:
+
+### Specs Phase
+- Every user-facing scenario in `openspec/changes/<change-name>/specs/<capability>/spec.md` MUST enumerate all states: **loading**, **empty**, **populated**, **error**
+- Acceptance criteria must explicitly cover edge states (offline, permission denied, rate limited) where applicable
+- Missing state definitions in a spec = incomplete spec; do not proceed to design
+
+### Design Phase
+- Map each state to component props and document in `openspec/changes/<change-name>/design.md`
+- Include a "UI States" section in the design showing state-to-component mapping
+- Document state transition behavior (animation, focus management, minimum loading duration)
+
+### Tasks Phase
+- Include state coverage verification tasks in `openspec/changes/<change-name>/tasks.md`
+- Each UI task must include: "Verify all states render correctly (loading, empty, populated, error)"
+- Add specific tasks for edge state handling if the feature involves network requests or permissions
+
+---
+
+## Stack-Specific Patterns (React / Next.js App Router)
+
+### Loading States with Suspense
+
+Use React Suspense boundaries and Next.js `loading.tsx` for loading states:
+
+```tsx
+// app/users/loading.tsx — Automatic loading UI for the route segment
+export default function Loading() {
+  return <UserListSkeleton />
+}
+
+// app/users/page.tsx — Server Component with async data
+export default async function UsersPage() {
+  const users = await getUsers()
+  // This renders only after data loads; loading.tsx shows during fetch
+  return <UserList users={users} />
+}
+```
+
+For component-level loading within a page:
+
+```tsx
+// Wrap async components in Suspense for granular loading states
+import { Suspense } from 'react'
+
+export default function DashboardPage() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <Suspense fallback={<StatsSkeleton />}>
+        <StatsPanel />
+      </Suspense>
+      <Suspense fallback={<ActivitySkeleton />}>
+        <RecentActivity />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+### Error States with error.tsx
+
+Use Next.js error boundaries for route-level error handling:
+
+```tsx
+// app/users/error.tsx — Automatic error UI for the route segment
+'use client'
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
+  return (
+    <div role="alert">
+      <h2>Something went wrong</h2>
+      <p>{error.message}</p>
+      <button onClick={() => reset()}>Try again</button>
+    </div>
+  )
+}
+```
+
+### Empty States
+
+Handle empty states explicitly in Server Components:
+
+```tsx
+export default async function UsersPage() {
+  const users = await getUsers()
+
+  if (users.length === 0) {
+    return (
+      <EmptyState
+        title="No users found"
+        description="Get started by inviting your first team member."
+        action={{ label: 'Invite User', href: '/users/invite' }}
+      />
+    )
+  }
+
+  return <UserList users={users} />
+}
+```
+
+### Client Component State Management
+
+For interactive components requiring client-side state transitions:
+
+```tsx
+'use client'
+
+import { useTransition } from 'react'
+
+export function UserActions({ userId }: { userId: string }) {
+  const [isPending, startTransition] = useTransition()
+
+  const handleDelete = () => {
+    startTransition(async () => {
+      await deleteUser(userId)
+    })
+  }
+
+  return (
+    <button
+      onClick={handleDelete}
+      disabled={isPending}
+      aria-busy={isPending}
+    >
+      {isPending ? 'Deleting...' : 'Delete User'}
+    </button>
+  )
+}
+```
 
 ---
 
