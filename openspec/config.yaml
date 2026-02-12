@@ -10,7 +10,7 @@ context: |
     compliance-patterns, db-migration, security-patterns, ux-states, testing-strategy,
     api-contracts, performance-patterns, deployment-lifecycle, sdd-phase-gates,
     frontend-design, interface-design
-  Docs: .next-docs/ contains version-specific Next.js documentation
+  Docs: Use Context7 MCP server for on-demand Next.js documentation (resolve-library-id + get-library-docs tools)
 
   When writing proposals, reference vercel-composition-patterns for component architecture.
   When writing specs, include accessibility scenarios from web-design-guidelines.
@@ -62,7 +62,7 @@ rules:
     - Run sdd-phase-gates specs-to-design checklist before advancing
   design:
     - Address Critical and High priority vercel-react-best-practices rules
-    - Validate API usage against .next-docs/ for version correctness
+    - Validate API usage against Context7 MCP docs for version correctness
     - Include STRIDE threat model and Security Design section per security-patterns
     - Map UI states to component props and document transitions per ux-states
     - Include Test Architecture section with required mocks per testing-strategy

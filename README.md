@@ -21,8 +21,8 @@ Next.js 15 (App Router), TypeScript, React 19, Tailwind CSS, shadcn/ui, Headless
 | Slash commands (26) | `.claude/commands/` | OPSX (10), Clavix (11), Interface Design (4), Vision (1) |
 | Agent permissions | `.claude/settings.local.json` | Pre-configured tool permissions |
 | Expert agent | `.claude/agents/` | OpenSpec/Claude configuration subagent |
-| Next.js docs | `.next-docs/` | 379 MDX files — Next.js 15 App Router reference |
-| Git ignores | `.gitignore` | Excludes node_modules, .env, .next, .next-docs, .ops, .clavix |
+| Context7 MCP config | `.mcp.json` | On-demand Next.js docs via Context7 MCP server |
+| Git ignores | `.gitignore` | Excludes node_modules, .env, .next, .ops, .clavix |
 
 ## Prerequisites
 
@@ -63,9 +63,9 @@ Installs Vercel reference skills for React and web development patterns. Skip re
 npx skills add vercel-labs/agent-skills
 ```
 
-### Step 5: Copy `.next-docs/` folder
+### Step 5: Copy `.mcp.json`
 
-Copy the entire `.next-docs/` directory into your project root. This gives Claude access to 379 MDX files covering the Next.js 15 App Router API — used as inline reference during development.
+Copy `.mcp.json` to your project root. This configures the Context7 MCP server, which provides on-demand Next.js documentation to Claude via tool calls — no bundled docs directory needed. Claude Code will prompt for approval on first use.
 
 ### Step 6: Copy `CLAUDE.md` and `AGENTS.md`
 
@@ -73,7 +73,7 @@ Copy both files to your project root. `CLAUDE.md` contains project rules (securi
 
 ### Step 7: Copy `.gitignore`
 
-Copy the `.gitignore` file, or merge its entries into your existing one. Key exclusions: `node_modules/`, `.env*`, `.next/`, `.next-docs/`, `.ops/`, `.clavix/`.
+Copy the `.gitignore` file, or merge its entries into your existing one. Key exclusions: `node_modules/`, `.env*`, `.next/`, `.ops/`, `.clavix/`.
 
 ### Step 8: Replace `.claude/skills/` folder
 
