@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr view:*)",
+      "Bash(gh issue:*)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "Bash(npm view:*)",
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(npm add:*)",
+      "Bash(rm *)",
+      "Bash(mkdir *)",
+      "Bash(mv *)",
+      "Bash(cp *)",
+      "Bash(ls:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git checkout:*)",
+      "Bash(git switch:*)",
+      "Bash(git branch:*)",
+      "Bash(supabase:*)",
+      "Bash(test:*)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:claudelog.com)"
+    ]
+  }
+}
