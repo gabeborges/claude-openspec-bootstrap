@@ -11,7 +11,7 @@ When you run `/clavix-prd`, I:
 2. **Establish version scope** - Confirm what version we're documenting (v0, v1, v2, etc.)
 3. **Ask focused questions** - About users, problems, features, and success metrics
 4. **Help you prioritize** - Separate must-haves from nice-to-haves
-5. **Create a versioned Mini-PRD** - Saved to `openspec/build/v{X}/prd.md`
+5. **Create a versioned Mini-PRD** - Saved to `openspec/prd-v{X}.md`
 
 **This PRD is scoped to one version/epic, not the entire product.**
 
@@ -50,7 +50,7 @@ For complete mode documentation, see: `.clavix/instructions/core/clavix-mode.md`
 | 1. Implementation Details | Writing API contracts, database schemas, system architecture diagrams, deployment pipelines |
 | 2. Skipping Version Scope | Not confirming which version (v0, v1, v2) this PRD is for |
 | 3. Ignoring Product Vision | Not checking for or referencing openspec/product-vision-strategy.md when it exists |
-| 4. Wrong Output Location | Saving to .clavix/outputs/ instead of openspec/build/v{X}/prd.md |
+| 4. Wrong Output Location | Saving to .clavix/outputs/ instead of openspec/prd-v{X}.md |
 | 5. Missing Key Sections | Not including must-haves, nice-to-haves, or non-goals |
 | 6. Solution-Focused Problems | Describing solutions instead of problems in "The Problem We're Solving" |
 | 7. Capability Hallucination | Claiming features Clavix doesn't have, inventing workflows |
@@ -524,10 +524,10 @@ Those belong in:
 ### Step 1: Determine Version Number
 
 ```bash
-# Check for existing versions in openspec/build/
-if [ -d "openspec/build" ]; then
+# Check for existing versioned PRDs in openspec/
+if ls openspec/prd-v*.md 1>/dev/null 2>&1; then
   # Find highest version number
-  LATEST=$(ls -d openspec/build/v* 2>/dev/null | sed 's/.*v//' | sort -n | tail -1)
+  LATEST=$(ls openspec/prd-v*.md 2>/dev/null | sed 's/.*prd-v//' | sed 's/\.md//' | sort -n | tail -1)
   VERSION=$((LATEST + 1))
 else
   VERSION=0
@@ -535,30 +535,29 @@ fi
 ```
 
 **Version Logic:**
-- First PRD: `v0`
+- First PRD: `v0` → `openspec/prd-v0.md`
 - Each new PRD: Increment version (v1, v2, v3, etc.)
 - **IMPORTANT**: If user specified a version in Q1 (e.g., "this is for v2"), use that version instead of auto-incrementing
 - Versions are sequential and never reused
-- Example: If v0, v1, v2 exist → create v3 (unless user specified otherwise)
+- Example: If prd-v0.md, prd-v1.md, prd-v2.md exist → create prd-v3.md (unless user specified otherwise)
 
-### Step 2: Create Output Directory
+### Step 2: Ensure Output Directory Exists
 
 ```bash
-mkdir -p openspec/build/v${VERSION}
+mkdir -p openspec
 ```
 
 **Handle errors**:
 - If directory creation fails: Check write permissions
-- If `openspec/` doesn't exist: Create it first: `mkdir -p openspec/build/v${VERSION}`
 
 ### Step 3: Save PRD
 
-**File path**: `openspec/build/v{VERSION}/prd.md`
+**File path**: `openspec/prd-v{VERSION}.md`
 
-**CRITICAL**: 
-- Save to ROOT level `openspec/build/v{X}/` directory
-- NOT inside `.clavix/`
-- Single file named `prd.md`
+**CRITICAL**:
+- Save to ROOT level `openspec/` directory as `prd-v{VERSION}.md`
+- NOT inside `.clavix/` or `openspec/build/`
+- Versioned filename (e.g., `prd-v0.md`, `prd-v1.md`)
 
 **Content**: Use the complete template structure above with all answers filled in
 
@@ -566,7 +565,7 @@ mkdir -p openspec/build/v${VERSION}
 
 **Verification Protocol:**
 1. **Immediately after Write**, use Read tool to verify:
-   - Read `openspec/build/v{VERSION}/prd.md`
+   - Read `openspec/prd-v{VERSION}.md`
    - Confirm content matches what you wrote
    - Verify all sections are present
 
@@ -580,7 +579,7 @@ Display to user:
 
 File saved:
   • Version: v{VERSION}
-  • Location: openspec/build/v{VERSION}/prd.md
+  • Location: openspec/prd-v{VERSION}.md
   • Scope: {Feature name} - version-scoped for v{VERSION}
   • [If product vision exists] Aligned with: openspec/product-vision-strategy.md
 
@@ -700,16 +699,16 @@ Next steps:
 - Probe based on features: "You mentioned X, does that mean we're NOT doing Y?"
 - Emphasize importance: "This helps prevent scope creep later"
 
-### Issue: Versioning conflicts (v{X} already exists)
+### Issue: Versioning conflicts (prd-v{X}.md already exists)
 
 **Cause**: Filesystem race condition or manual file creation
 **Solution**:
-- Check for next available version number
-- If v0, v1, v2 exist and user tries to create v1 again → use v3
+- Check for next available version number by scanning `openspec/prd-v*.md`
+- If prd-v0.md, prd-v1.md, prd-v2.md exist and user tries to create v1 again → use v3
 - Never overwrite existing versions without explicit confirmation
-- If user wants to replace a version: "Version v{X} already exists. Should I:
-  1. Create a new version (v{Y})
-  2. Archive v{X} and replace it
+- If user wants to replace a version: "prd-v{X}.md already exists. Should I:
+  1. Create a new version (prd-v{Y}.md)
+  2. Replace prd-v{X}.md
   3. Cancel"
 
 ### Issue: Generated PRD feels too detailed or too vague

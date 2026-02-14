@@ -98,7 +98,8 @@ Implementation: BLOCKED - I will create the plan, not the code
 4. **Output Summary**: Briefly state the detected stack (e.g., "Detected: Next.js 14 (App Router), Tailwind, Prisma, Zod").
 
 #### **Phase 2: PRD Ingestion**
-1. **Locate PRD**:
+1. **Locate PRD** (check in order):
+   - Check `openspec/prd-v*.md` for versioned PRDs (use the highest version number)
    - Check `.clavix/outputs/<project-name>/` for `full-prd.md`, `quick-prd.md`, etc.
    - If missing, check legacy `.clavix/outputs/summarize/`.
 2. **Read PRD**: Ingest the requirements.

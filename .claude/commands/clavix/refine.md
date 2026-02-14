@@ -80,6 +80,7 @@ Implementation: BLOCKED - I'll update requirements, not build them
 I'll check what's available to refine:
 
 **Looking for PRDs:**
+- Check `openspec/prd-v*.md` (versioned PRDs - use highest version)
 - Check `.clavix/outputs/*/mini-prd.md`
 - Check `.clavix/outputs/*/quick-prd.md`
 - Check `.clavix/outputs/*/full-prd.md`

@@ -53,7 +53,9 @@ When you run `/clavix:verify`, I act as a **Senior Code Reviewer**. I compare *w
 
 ### Phase 1: Scope & Context
 1.  **Identify Completed Work**: Read `.clavix/outputs/[project]/tasks.md`. Look for checked `[x]` items in the current phase.
-2.  **Load Requirements**: Read `.clavix/outputs/[project]/full-prd.md`.
+2.  **Load Requirements**: Check for PRDs in order:
+    - `openspec/prd-v*.md` (use highest version number)
+    - `.clavix/outputs/[project]/full-prd.md`
 3.  **Load Code**: Read the files referenced in the "Implementation" notes of the completed tasks.
 
 ### Phase 2: The Audit (Comparison)
