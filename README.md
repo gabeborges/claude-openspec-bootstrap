@@ -21,7 +21,7 @@ Next.js 15 (App Router), TypeScript, React 19, Tailwind CSS, shadcn/ui, Headless
 | Slash commands (26) | `.claude/commands/` | OPSX (10), Clavix (11), Interface Design (4), Vision (1) |
 | Agent permissions | `.claude/settings.local.json` | Pre-configured tool permissions |
 | Expert agent | `.claude/agents/` | OpenSpec/Claude configuration subagent |
-| Context7 MCP config | `.mcp.json` | On-demand Next.js docs via Context7 MCP server |
+| MCP servers | `.mcp.json` | Context7, Playwright, Supabase, Resend, Vercel |
 | Git ignores | `.gitignore` | Excludes node_modules, .env, .next, .ops, .clavix |
 
 ## Prerequisites
@@ -65,7 +65,34 @@ npx skills add vercel-labs/agent-skills
 
 ### Step 5: Copy `.mcp.json`
 
-Copy `.mcp.json` to your project root. This configures the Context7 MCP server, which provides on-demand Next.js documentation to Claude via tool calls — no bundled docs directory needed. Claude Code will prompt for approval on first use.
+Copy `.mcp.json` to your project root. This configures MCP servers that extend Claude's capabilities. Claude Code will prompt for approval on first use.
+
+#### MCP Servers
+
+| Server | Package | Purpose |
+|--------|---------|---------|
+| Context7 | `@upstash/context7-mcp` | On-demand library docs (Next.js, React, etc.) |
+| Playwright | `@playwright/mcp` | Browser automation and testing |
+| Supabase | `@supabase/mcp-server-supabase` | Database operations, auth, project management |
+| Resend | `@bugzy-ai/resend-mcp-server` | Email sending and management |
+| Vercel | `mcp-remote` → `mcp.vercel.com` | Deployment management, logs, project config |
+
+#### Required Environment Variables
+
+Set these before using servers that need auth:
+
+```bash
+# Supabase — personal access token (dashboard.supabase.com/account/tokens)
+SUPABASE_ACCESS_TOKEN=sbp_xxxxxxxxxxxxx
+
+# Resend — API key (resend.com/api-keys)
+RESEND_API_KEY=re_xxxxxxxxxxxxx
+RESEND_FROM_EMAIL=You <notifications@yourdomain.com>
+```
+
+**Vercel** uses OAuth — it will prompt you to authenticate in the browser on first use. No env vars needed.
+
+**Context7** and **Playwright** require no authentication.
 
 ### Step 6: Copy `CLAUDE.md` and `AGENTS.md`
 
